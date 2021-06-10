@@ -26,13 +26,4 @@ public interface MyDao
     public void updatePosts(PostDB postDB);
 
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    public void addLanguage(LanguageDB languageDB);
-
-    @Query("select * from languageDB")
-    public List<LanguageDB> getLanguages();
-
-    @Delete
-    public void deleteLanguage(LanguageDB languageDB);
-
 }

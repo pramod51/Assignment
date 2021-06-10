@@ -4,11 +4,16 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
+
+import com.assign.assignment.Database.MyAppDatabase;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -30,6 +35,7 @@ public class PostAdopter extends RecyclerView.Adapter<PostAdopter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Post post=postModels.get(position);
+        Glide.with(context).load(post.getFlag()).into(holder.flagImageView);
         holder.name.setText(post.getName());
         holder.capital.setText(post.getCapital());
         holder.regions.setText(post.getRegion());
@@ -43,6 +49,13 @@ public class PostAdopter extends RecyclerView.Adapter<PostAdopter.ViewHolder> {
         }*/
         holder.language.setText(lang);
         //holder.borders.setText(post.getBorders().toString());
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                postModels.remove(position);
+                notifyItemRemoved(position);
+            }
+        });
     }
 
     @Override
@@ -53,6 +66,7 @@ public class PostAdopter extends RecyclerView.Adapter<PostAdopter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name,capital,regions,subRegion,population,language,borders;
         ImageView flagImageView;
+        Button delete;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.name);
@@ -63,7 +77,7 @@ public class PostAdopter extends RecyclerView.Adapter<PostAdopter.ViewHolder> {
             language=itemView.findViewById(R.id.language);
             borders=itemView.findViewById(R.id.borders);
             flagImageView=itemView.findViewById(R.id.flag);
-
+            delete=itemView.findViewById(R.id.delete);
         }
     }
 }

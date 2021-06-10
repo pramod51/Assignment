@@ -57,11 +57,11 @@ public class MainActivity extends AppCompatActivity {
                 List<Post> posts = response.body();
                 for (Post post : posts) {
                     PostDB postDB=new PostDB();
-                    LanguageDB languageDB=new LanguageDB();
+                    /*LanguageDB languageDB=new LanguageDB();
                     for (Languages languages:post.getLanguages()) {
                         languageDB.setName(languages.getName());
                         languageDB.setNativeName(languages.getNativeName());
-                    }
+                    }*/
                     postDB.setName(post.getName());
                     postDB.setCapital(post.getCapital());
                     //postDB.setBorders(post.getBorders());
@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     postDB.setRegion(post.getRegion());
                     postDB.setSubregion(post.getSubregion());
                     Log.v("tag",post.getName());
+                    posts.add(new Post(post.getName(), post.getCapital(), post.getRegion(), post.getSubregion(), post.getFlag(), null,null, post.getPopulation()));
                     MainActivity.myAppDatabase.myDao().addUser(postDB);
                 }
             }
@@ -86,9 +87,11 @@ public class MainActivity extends AppCompatActivity {
         List<PostDB> postDB=MainActivity.myAppDatabase.myDao().getPosts();
         for (PostDB post:postDB){
             Log.v("tttt",post.getCapital());
+            if (posts.size()==0)
             posts.add(new Post(post.getName(), post.getCapital(), post.getRegion(), post.getSubregion(), post.getFlag(), null,null, post.getPopulation()));
         }
         adapter=new PostAdopter(posts,this);
         recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 }

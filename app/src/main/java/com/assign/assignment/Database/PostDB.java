@@ -1,6 +1,7 @@
 package com.assign.assignment.Database;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -14,18 +15,8 @@ import java.util.List;
 @Entity(tableName = "postDB")
 public class PostDB {
 
-    @PrimaryKey(autoGenerate = true)
-    int id;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @ColumnInfo(name = "name")
+    @NonNull
+    @PrimaryKey()
     private String name;
     @ColumnInfo(name = "capital")
     private String capital;
